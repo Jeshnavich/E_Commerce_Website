@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Product</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-light: #374151;
+	    --navy: #0f172a;
+	    --accent: #0891b2;
+	    --accent-dark: #0e7490;
+    --text-light: #9ca3af;
+    --border: #d1d5db;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+      font-family: 'Inter', sans-serif;
+      background:
+      linear-gradient(rgba(255,255,255,.92), rgba(255,255,255,.92)),
+      url("https://images.unsplash.com/photo-1556740749-887f6717d7e4?w=1600");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    inset: -50px;
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.8;
+    z-index: 0;
+    animation: gridDrift 20s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(60px, 60px); }
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+    animation: float 9s ease-in-out infinite;
+  }
+
+  .blob-1 {
+    width: 260px;
+    height: 260px;
+    background: rgba(124, 58, 237, 0.08);
+    top: -80px;
+    left: -80px;
+    animation-duration: 11s;
+  }
+
+  .blob-2 {
+    width: 200px;
+    height: 200px;
+    background: rgba(16, 185, 129, 0.08);
+    bottom: -60px;
+    right: -60px;
+    animation-duration: 13s;
+    animation-delay: 1.5s;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    50% {
+      transform: translateY(-20px) translateX(12px);
+    }
+  }
+
+  .form-card {
+    position: relative;
+    z-index: 1;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 560px;
+    overflow: hidden;
+    opacity: 0;
+    animation: cardEntrance 0.8s ease forwards;
+  }
+
+  @keyframes cardEntrance {
+    from {
+      opacity: 0;
+      transform: translateY(25px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .form-header {
+    background: linear-gradient(135deg, var(--navy), var(--accent));
+    padding: 28px 36px;
+  }
+
+  .form-header .eyebrow {
+    display: inline-block;
+    color: #fff;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    animation: fadeUp .5s ease forwards;
+  }
+
+  .form-header h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    color: #fff;
+    margin: 0;
+    animation: fadeUp .6s ease forwards;
+  }
+
+  .form-header p {
+    color: #d1d5db;
+    margin-top: 6px;
+    font-size: .9rem;
+    animation: fadeUp .7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .form-body {
+    padding: 32px 36px;
+  }
+
+  .field-group {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+    transition: .3s;
+  }
+
+  input.form-control-custom {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: .95rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: #f8fafc;
+    transition: .3s;
+  }
+
+  input.form-control-custom::placeholder {
+    color: #9ca3af;
+  }
+
+  input.form-control-custom:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(124,58,237,.15);
+    transform: translateY(-1px);
+  }
+
+  .field-group:focus-within label {
+    color: var(--accent);
+  }
+
+  .row-split {
+    display: flex;
+    gap: 16px;
+  }
+
+  .row-split .field-group {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .row-split-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 40%;
+    height: 100%;
+    background: rgba(255,255,255,.3);
+    transform: skewX(-20deg);
+    transition: .6s;
+  }
+
+  .submit-btn:hover {
+    background: #5b21b6;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(91,33,182,.35);
+  }
+
+  .submit-btn:hover::before {
+    left: 130%;
+  }
+
+  .cancel-link {
+    display: block;
+    margin-top: 16px;
+    text-align: center;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: .3s;
+  }
+
+  .cancel-link:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width:480px) {
+    .form-header,
+    .form-body {
+      padding: 24px;
+    }
+
+    .row-split {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .blob {
+      display: none;
+    }
+	select.form-control-custom{
+	    width:100%;
+	    padding:12px 16px;
+	    border:1px solid var(--border);
+	    border-radius:10px;
+	    background:#f8fafc;
+	    transition:.3s;
+	}
+
+	select.form-control-custom:focus{
+	    outline:none;
+	    border-color:var(--accent);
+	    background:#fff;
+	    box-shadow:0 0 0 4px rgba(124,58,237,.15);
+	}
+  }
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark" style="background:linear-gradient(135deg,#1f2937,#7c3aed);">
+	    <div class="container">
+	        <a class="navbar-brand fw-bold" href="/products">🛒 TechVerse</a>
+
+	        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+
+	        <div class="collapse navbar-collapse" id="menu">
+	            <ul class="navbar-nav me-auto">
+	                <li class="nav-item">
+	                    <a class="nav-link" href="/products">Products</a>
+	                </li>
+	            </ul>
+
+	            <a href="/products" class="btn btn-warning me-2">← Back</a>
+
+	            <a href="/" class="btn btn-danger">Logout</a>
+	        </div>
+	    </div>
+	</nav>
+
+	<div class="container py-5">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="form-card mx-auto">
+  <div class="form-header">
+    <span class="eyebrow">Admin Panel</span>
+    <h2>Add New Product</h2>
+	<p>
+	Add a new TechVerse product to your catalog.
+	</p>
+  </div>
+
+  <div class="form-body">
+    <form method="post" action="/add-product">
+
+      <div class="field-group">
+        <label for="name">Product Name</label>
+        <input class="form-control-custom" id="name" name="name" placeholder="e.g. Wireless Noise-Cancelling Headphones">
+      </div>
+
+      <div class="row-split-wrapper">
+        <div class="row-split">
+          <div class="field-group">
+            <label for="price">Price (₹)</label>
+            <input class="form-control-custom" id="price" name="price" type="number" step="0.01" placeholder="0.00">
+          </div>
+		  <div class="field-group">
+		      <label for="category">Category</label>
+
+		      <select class="form-control-custom" id="category" name="category" required>
+
+		          <option value="">Select Category</option>
+
+		          <option value="Mobiles">📱 Mobiles</option>
+
+		          <option value="Laptops">💻 Laptops</option>
+
+		          <option value="Audio">🎧 Audio</option>
+
+		          <option value="Wearables">⌚ Wearables</option>
+
+		          <option value="Accessories">🎒 Accessories</option>
+
+		      </select>
+		  </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="description">Description</label>
+        <input class="form-control-custom" id="description" name="description" placeholder="Short product description">
+      </div>
+
+      <div class="field-group">
+        <label for="image">Image URL</label>
+        <input class="form-control-custom" id="image" name="image" placeholder="https://example.com/product.jpg">
+      </div>
+
+      <button type="submit" class="submit-btn">Add Product</button>
+	  <div class="d-grid mt-3">
+	      <a href="/products" class="btn btn-outline-secondary">
+	          ← Back to Products
+	      </a>
+	  </div>
+
+    </form>
+  </div>
+  </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+  </html>

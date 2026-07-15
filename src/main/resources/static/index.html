@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Index</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+		--navy: #0f172a;
+	    --navy-light: #1e293b;
+	    --accent: #0891b2;
+	    --accent-dark: #0e7490;
+    --text-light: #9ca3af;
+    --border: #4b5563;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f3f4f6, #ffffff);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .top-bar {
+    background: var(--navy);
+    color: #d1d5db;
+    font-size: .82rem;
+    padding: 10px 0;
+    text-align: center;
+    letter-spacing: .05em;
+  }
+
+  .navbar-custom {
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+  }
+
+  .brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .brand span {
+    color: var(--accent);
+  }
+
+  .hero {
+    flex: 1;
+    background: linear-gradient(135deg, var(--navy), var(--accent));
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    padding: 90px 20px;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: .8;
+  }
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(255,255,255,.12), transparent 70%);
+    top: -120px;
+    right: -80px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 6px 16px;
+    border-radius: 25px;
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeUp .6s ease;
+  }
+
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.8rem;
+    color: #fff;
+    margin-bottom: 18px;
+    line-height: 1.2;
+    animation: fadeUp .8s ease;
+  }
+
+  .highlight {
+    color: #facc15;
+  }
+
+  .hero-subtitle {
+    color: #d1d5db;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 36px;
+    animation: fadeUp 1s ease;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-custom,
+  .btn-outline-custom {
+    padding: 14px 34px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+  }
+
+  .btn-primary-custom {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-primary-custom:hover {
+    background: var(--accent-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(109,40,217,.35);
+  }
+
+  .btn-outline-custom {
+    border: 1px solid rgba(255,255,255,.35);
+    color: #fff;
+    background: rgba(255,255,255,.05);
+  }
+
+  .btn-outline-custom:hover {
+    background: rgba(255,255,255,.12);
+    transform: translateY(-2px);
+  }
+
+  .feature-strip {
+    background: #fff;
+    padding: 38px 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .feature-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    background: #f3e8ff;
+    color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+  }
+
+  .feature-text h6 {
+    margin: 0;
+    color: var(--navy);
+    font-size: .92rem;
+    font-weight: 600;
+  }
+
+  .feature-text p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: .82rem;
+  }
+
+  .footer-custom {
+    background: var(--navy);
+    color: #9ca3af;
+    text-align: center;
+    padding: 22px;
+    font-size: .82rem;
+  }
+
+  @media (max-width:576px) {
+    h1 {
+      font-size: 2rem;
+    }
+
+    .hero {
+      padding: 65px 20px;
+    }
+
+    .btn-group {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">Free shipping on orders over ₹15000 &nbsp;|&nbsp; 2-Year warranty on All devices</div>
+
+<nav class="navbar-custom">
+  <div class="container d-flex justify-content-between align-items-center">
+    <div class="brand">TECHVERSE<span>Gadgets</span></div>
+    <a href="/register" class="btn-outline-custom" style="padding: 9px 22px; font-size: 0.85rem;">Sign In</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">New Arrivals — 2026 Collection</span>
+    <h1>Premium Gadgets for the <span class="highlight">Modern World</span></h1>
+    <p class="hero-subtitle">Discover the latest in smart devices, audio technology, and accessories — carefully curated and backed by our satisfaction guarantee.</p>
+    <div class="btn-group">
+      <a href="/register" class="btn-primary-custom">Create an Account</a>
+      <a href="#" class="btn-outline-custom">Browse Catalog</a>
+    </div>
+  </div>
+</section>
+
+<section class="feature-strip">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-item">
+          <div class="feature-icon">🚚</div>
+          <div class="feature-text">
+            <h6>Free Delivery</h6>
+            <p>On orders over ₹15000</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-text">
+            <h6>Secure Payments</h6>
+            <p>256-bit SSL encryption</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-item">
+          <div class="feature-icon">↩️</div>
+          <div class="feature-text">
+            <h6>Easy Returns</h6>
+            <p>30-day return policy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-custom">
+  &copy; 2026 TechVerse Gadgets. All rights reserved.
+</footer>
+
+</body>
+</html>
